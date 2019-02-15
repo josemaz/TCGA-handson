@@ -1,0 +1,33 @@
+{
+  "content": [
+    {
+      "content": {
+        "field": "cases.primary_site",
+        "value": "Breast"
+      },
+      "op": "in"
+    },
+    {
+      "content": {
+        "field": "cases.samples.sample_type",
+        "value": "Primary Tumor"
+      },
+      "op": "in"
+    },
+    {
+      "content": {
+        "field": "cases.diagnoses.vital_status",
+        "value": ["alive","dead"]
+      },
+      "op": "in"
+    },
+    {
+      "content": {
+        "field": "files.analysis.workflow_type",
+        "value": ["HTSeq - Counts"]
+      },
+      "op": "in"
+    }
+  ],
+  "op": "and"
+  }
