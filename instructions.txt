@@ -1,0 +1,72 @@
+#################
+#Ingresar al portal de TCGA en un navegador web
+https://portal.gdc.cancer.gov/cart
+
+#Ingresar a las consultas avanzadas
+Repository -> Advanced Search
+
+#Consulta por tipo de cancer
+cases.primary_site = "Eye and adnexa"	
+
+#Consulta solo para archivos abiertos
+cases.primary_site = "Eye and adnexa" and files.access = open
+
+#Consulta solo para el tumor primario
+cases.primary_site = "Eye and adnexa" and files.access = open and cases.samples.sample_type in ["Primary Tumor"]
+
+#Consulta solo para el tejido sano
+cases.primary_site = "Eye and adnexa" and files.access = open and cases.samples.sample_type in ["Solid Tissue Normal"]
+
+#Consulta sobre archivos de RNA-seq
+cases.primary_site = "Eye and adnexa" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts" 
+
+#Consulta sobre archivos de miRNA
+cases.primary_site = "Eye and adnexa" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.data_type = "miRNA Expression Quantification"
+
+#Consulta sobre archivos de Metilacion
+cases.primary_site = "Eye and adnexa" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.data_category = "DNA Methylation"
+
+#Anadir todos los archivos a la carta e ir a la carta
+
+#Descargar la carta
+
+#Descargar el manifest
+
+#Descargar los metadatos (json)
+
+#Descargar las caracteristicas de los archivos (tsv)
+
+#Descargar la informacion clinica de los archivos (tsv)
+
+#################
+#Consulta sobre RNAseq del cancer de prostata (hay casos con mas de un archivo RNAseq)
+cases.primary_site = "Prostate gland" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts" 
+
+#Casos con menos archivos RNAseq que Pacientes (aqui no hay problema)
+cases.primary_site = Skin and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts" 
+
+#Descomprimir archivos de la carta
+gunzip -r .
+find . -iname "*.counts" -exec mv '{}' htseq  \;
+
+#Descargar sample sheet
+#Visualizar el sample sheet
+
+#listar duplicados
+awk -F $'\t' '{print $6}' gdc_sample_sheet.2019-02-14.tsv | sort | uniq -d
+
+#Borrar duplicados manualmente
+cat gdc_sample_sheet.2019-02-14.tsv | grep "caso duplicad"
+ls htseq/"caso duplicado .htseq.counts"
+
+#################
+#Tratamiento de subtipos en cancer de pulmon Adenocarcinoma
+cases.primary_site = "Bronchus and lung" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts"  and cases.project.name = "Lung Adenocarcinoma"
+
+#Tratamiento de subtipos en cancer de pulmon 
+cases.primary_site = "Bronchus and lung" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts"  and cases.project.name = "Lung Squamous Cell Carcinoma"
+
+#Tratamiento de subtipos en cancer de pulmon por etapa
+cases.primary_site = "Bronchus and lung" and files.access = open and cases.samples.sample_type in ["Primary Tumor"] and files.analysis.workflow_type = "HTSeq - Counts"  and cases.project.name = "Lung Squamous Cell Carcinoma" and cases.diagnoses.tumor_stage in ["stage ii","stage iia","stage iib",ii,"stage iic","stage 2b","stage 2a"]
+
+
